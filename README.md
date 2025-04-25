@@ -178,7 +178,12 @@ Esse sistema é simples e pode ser expandido com recursos como autenticação de
 
 ## Parte 6: Explicando os HTMLs
 
-fazer_pedido.html
+Explicação das Páginas HTML
+Aqui está a explicação detalhada das páginas HTML do projeto.
+
+1. fazer_pedido.html
+Essa página contém o formulário onde o cliente faz o pedido.
+
 html
 Copiar
 Editar
@@ -199,73 +204,24 @@ Editar
 
     <button type="submit">Fazer Pedido</button>
 </form>
-Explicação Detalhada:
+Explicação
+<form method="post">: Define um formulário HTML e especifica que os dados devem ser enviados usando o método POST. Esse método é utilizado para envio de dados ao servidor.
 
-<form method="post">:
+{% csrf_token %}: Tag do Django usada para inserir um token CSRF, garantindo segurança contra ataques de falsificação de requisições.
 
-<form>: Define um formulário no HTML. Ele permite que você envie dados para o servidor.
+<label for="nome">: Cria um rótulo para o campo de nome. O atributo for associa o rótulo ao campo com o id="nome".
 
-method="post": Especifica que o método de envio dos dados será POST. Ou seja, quando o formulário for enviado, ele vai enviar os dados para o servidor para que eles sejam processados, geralmente para criar ou modificar algo no banco de dados.
+<input type="text" name="nome" id="nome">: Define um campo de entrada de texto onde o cliente pode digitar seu nome. O name="nome" é usado para identificar o campo no servidor.
 
-{% csrf_token %}:
+<select name="produto" id="produto">: Cria um campo de seleção suspensa (dropdown) para que o cliente escolha um produto.
 
-Isso não é uma tag HTML comum, mas uma tag do Django chamada CSRF Token. O Django usa essa tag para proteger o formulário contra ataques CSRF (Cross-Site Request Forgery), que tentam enviar requisições falsas em nome do usuário.
+{% for produto in produtos %}: Loop do Django que percorre todos os produtos passados pelo backend para criar opções no campo de seleção.
 
-<label for="nome">Nome:</label>:
+<button type="submit">Fazer Pedido</button>: Um botão para enviar o formulário com os dados preenchidos.
 
-<label>: A tag <label> é usada para descrever o propósito de um campo de entrada, ou seja, ela fornece uma explicação ao usuário sobre o que ele deve preencher.
+2. listar_pedidos.html
+Página que exibe a lista de pedidos feitos.
 
-for="nome": O atributo for especifica a qual campo de entrada o rótulo está associado. No caso, o for="nome" se refere ao campo com o id="nome". Isso melhora a acessibilidade e facilita a interação com o formulário.
-
-<input type="text" name="nome" id="nome">:
-
-<input>: A tag de entrada é usada para coletar dados de um usuário.
-
-type="text": Define que este campo de entrada será um campo de texto, ou seja, o usuário pode digitar qualquer coisa (como o nome).
-
-name="nome": O atributo name define o nome do campo, que será usado no servidor para identificar o valor enviado quando o formulário for enviado.
-
-id="nome": O id serve para identificar o campo dentro do HTML, e ele está associado ao <label for="nome">.
-
-<label for="endereco">Endereço:</label>:
-
-A mesma explicação do <label> se aplica aqui, mas agora estamos falando sobre o campo de endereço.
-
-<input type="text" name="endereco" id="endereco">:
-
-Funciona da mesma forma que o campo anterior, mas agora para o endereço do cliente.
-
-<label for="produto">Produto:</label>:
-
-A tag de label aqui descreve o campo de produto que o cliente vai escolher.
-
-<select name="produto" id="produto">:
-
-<select>: Define um campo de seleção suspensa, ou seja, um dropdown. O usuário pode escolher um dos itens fornecidos.
-
-name="produto": Como os outros campos, define o nome desse campo no formulário, que será usado no servidor.
-
-id="produto": Identifica o campo de seleção na página, associado ao <label for="produto">.
-
-{% for produto in produtos %}:
-
-Esta é uma tag do Django Template Language que inicia um loop para iterar sobre os produtos. Cada item no loop será um produto da lista passada pela view do Django.
-
-<option value="{{ produto.id }}">{{ produto.nome }}</option>:
-
-<option>: Define uma opção dentro de um campo de seleção (<select>).
-
-value="{{ produto.id }}": O valor da opção que será enviado para o servidor quando o usuário selecionar esta opção. O valor é o ID do produto (vindo do banco de dados).
-
-{{ produto.nome }}: O nome do produto que será exibido ao usuário na interface. Ele vem do contexto da view, onde a lista de produtos é passada para o template.
-
-<button type="submit">Fazer Pedido</button>:
-
-<button>: Cria um botão interativo.
-
-type="submit": O tipo submit indica que esse botão vai enviar o formulário quando pressionado. No caso, ele envia os dados para o servidor, que processará o pedido.
-
-listar_pedidos.html
 html
 Copiar
 Editar
@@ -275,37 +231,18 @@ Editar
         <li>{{ pedido.cliente.nome }} pediu {{ pedido.produto.nome }} em {{ pedido.data_hora }}</li>
     {% endfor %}
 </ul>
-Explicação Detalhada:
+Explicação
+<h2>Lista de Pedidos</h2>: Exibe o título da página.
 
-<h2>Lista de Pedidos</h2>:
+<ul>: Cria uma lista não ordenada.
 
-<h2>: Uma tag de cabeçalho que define um título para a seção. O número (h1, h2, h3, ...) indica o nível do título, sendo h1 o mais importante.
+{% for pedido in pedidos %}: Loop do Django que percorre a lista de pedidos e gera um item de lista para cada pedido.
 
-O texto "Lista de Pedidos" será exibido como título dessa parte da página.
+<li>{{ pedido.cliente.nome }} pediu {{ pedido.produto.nome }} em {{ pedido.data_hora }}</li>: Para cada pedido, exibe o nome do cliente, o produto pedido e a data/hora.
 
-<ul>:
+3. listar_comandas.html
+Página que exibe a lista de comandas da cozinha.
 
-<ul>: A tag de lista não ordenada. Usada para criar uma lista de itens onde a ordem não importa.
-
-{% for pedido in pedidos %}:
-
-Mais uma tag do Django Template Language que inicia um loop sobre a lista de pedidos, que é passada para o template pela view.
-
-<li>{{ pedido.cliente.nome }} pediu {{ pedido.produto.nome }} em {{ pedido.data_hora }}</li>:
-
-<li>: Define um item de lista. Neste caso, cada item exibirá informações sobre um pedido.
-
-{{ pedido.cliente.nome }}: Exibe o nome do cliente associado ao pedido.
-
-{{ pedido.produto.nome }}: Exibe o nome do produto associado ao pedido.
-
-{{ pedido.data_hora }}: Exibe a data e hora do pedido.
-
-{% endfor %}:
-
-Fim do loop, sinaliza que a iteração sobre os pedidos terminou.
-
-listar_comandas.html
 html
 Copiar
 Editar
@@ -315,18 +252,14 @@ Editar
         <li>{{ comanda.produto }} - {{ comanda.data_hora }}</li>
     {% endfor %}
 </ul>
-Explicação Detalhada:
-
-<h2>: Novamente, define o título da seção, neste caso "Comandas da Cozinha".
+Explicação
+<h2>Comandas da Cozinha</h2>: Exibe o título da página.
 
 <ul>: Cria uma lista não ordenada.
 
-{% for comanda in comandas %}: Inicia um loop sobre a lista de comandas, passando os dados da view.
+{% for comanda in comandas %}: Loop do Django que percorre todas as comandas.
 
-<li>{{ comanda.produto }} - {{ comanda.data_hora }}</li>: Exibe para cada comanda o nome do produto e a data/hora da comanda.
-
-{% endfor %}: Fim do loop que itera sobre as comandas.
-
+<li>{{ comanda.produto }} - {{ comanda.data_hora }}</li>: Para cada comanda, exibe o produto e a data/hora.
 
 Conclusão
 
