@@ -1,4 +1,3 @@
-
 # Guia Completo do Sistema de Delivery - Django
 
 Este repositório contém um sistema simples de delivery feito em Django. O objetivo desse guia é ensinar o funcionamento de cada parte do código, desde os conceitos básicos até a implementação dos pedidos, comandas e administração. Abaixo, vamos explicar tudo detalhadamente.
@@ -177,8 +176,59 @@ def fazer_pedido(request):
 
 Esse sistema é simples e pode ser expandido com recursos como autenticação de usuário, rastreamento de pedidos e visualização mais rica dos produtos.
 
+## Parte 6: Explicando os HTMLs
+
+### 1. fazer_pedido.html
+
+```html
+<form method="post">
+    {% csrf_token %}
+    <label for="nome">Nome:</label>
+    <input type="text" name="nome" id="nome">
+
+    <label for="endereco">Endereço:</label>
+    <input type="text" name="endereco" id="endereco">
+
+    <label for="produto">Produto:</label>
+    <select name="produto" id="produto">
+        {% for produto in produtos %}
+            <option value="{{ produto.id }}">{{ produto.nome }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Fazer Pedido</button>
+</form>
+```
+
+### 2. listar_pedidos.html
+
+```html
+<h2>Lista de Pedidos</h2>
+<ul>
+    {% for pedido in pedidos %}
+        <li>{{ pedido.cliente.nome }} pediu {{ pedido.produto.nome }} em {{ pedido.data_hora }}</li>
+    {% endfor %}
+</ul>
+```
+
+Esse HTML mostra uma lista com todos os pedidos feitos, exibindo o nome do cliente, o produto e o horário do pedido.
+
+### 3. listar_comandas.html
+
+```html
+<h2>Comandas da Cozinha</h2>
+<ul>
+    {% for comanda in comandas %}
+        <li>{{ comanda.produto }} - {{ comanda.data_hora }}</li>
+    {% endfor %}
+</ul>
+```
+
+Este template exibe as comandas que foram criadas, com o nome do produto e o horário da comanda. É usado pela cozinha para acompanhar o que precisa ser preparado.
+
 ## Conclusão
 
 Este README oferece uma explicação detalhada de cada parte do sistema de delivery. Ao seguir este guia, você deve ser capaz de entender como o Django gerencia os pedidos, a criação das comandas e a comunicação entre o cliente e o servidor utilizando os métodos HTTP **GET** e **POST**.
 
 Se você tiver dúvidas ou sugestões, me avise!
+
