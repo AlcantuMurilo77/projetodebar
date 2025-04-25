@@ -175,98 +175,92 @@ def fazer_pedido(request):
 ## Parte 5: Testes e Melhorias
 
 Esse sistema é simples e pode ser expandido com recursos como autenticação de usuário, rastreamento de pedidos e visualização mais rica dos produtos.
+# Explicação das Páginas HTML
 
-## Parte 6: Explicando os HTMLs
-
-Explicação das Páginas HTML
 Aqui está a explicação detalhada das páginas HTML do projeto.
 
-1. fazer_pedido.html
+---
+
+### **1. `fazer_pedido.html`**
+
 Essa página contém o formulário onde o cliente faz o pedido.
 
-html
-Copiar
-Editar
+```html
 <form method="post">
     {% csrf_token %}
+    
     <label for="nome">Nome:</label>
     <input type="text" name="nome" id="nome">
-
+    
     <label for="endereco">Endereço:</label>
     <input type="text" name="endereco" id="endereco">
-
+    
     <label for="produto">Produto:</label>
     <select name="produto" id="produto">
         {% for produto in produtos %}
             <option value="{{ produto.id }}">{{ produto.nome }}</option>
         {% endfor %}
     </select>
-
+    
     <button type="submit">Fazer Pedido</button>
 </form>
-Explicação
-<form method="post">: Define um formulário HTML e especifica que os dados devem ser enviados usando o método POST. Esse método é utilizado para envio de dados ao servidor.
+```
 
-{% csrf_token %}: Tag do Django usada para inserir um token CSRF, garantindo segurança contra ataques de falsificação de requisições.
+#### Explicação
 
-<label for="nome">: Cria um rótulo para o campo de nome. O atributo for associa o rótulo ao campo com o id="nome".
+- **`<form method="post">`**: Define um formulário HTML e especifica que os dados devem ser enviados usando o método **POST**. Esse método é utilizado para envio de dados ao servidor.
+- **`{% csrf_token %}`**: Tag do Django usada para inserir um token CSRF, garantindo segurança contra ataques de falsificação de requisições.
+- **`<label for="nome">`**: Cria um rótulo para o campo de nome. O atributo `for` associa o rótulo ao campo com o `id="nome"`.
+- **`<input type="text" name="nome" id="nome">`**: Define um campo de entrada de texto onde o cliente pode digitar seu nome. O `name="nome"` é usado para identificar o campo no servidor.
+- **`<select name="produto" id="produto">`**: Cria um campo de seleção suspensa (dropdown) para que o cliente escolha um produto.
+- **`{% for produto in produtos %}`**: Loop do Django que percorre todos os produtos passados pelo backend para criar opções no campo de seleção.
+- **`<button type="submit">Fazer Pedido</button>`**: Um botão para enviar o formulário com os dados preenchidos.
 
-<input type="text" name="nome" id="nome">: Define um campo de entrada de texto onde o cliente pode digitar seu nome. O name="nome" é usado para identificar o campo no servidor.
+---
 
-<select name="produto" id="produto">: Cria um campo de seleção suspensa (dropdown) para que o cliente escolha um produto.
+### **2. `listar_pedidos.html`**
 
-{% for produto in produtos %}: Loop do Django que percorre todos os produtos passados pelo backend para criar opções no campo de seleção.
-
-<button type="submit">Fazer Pedido</button>: Um botão para enviar o formulário com os dados preenchidos.
-
-2. listar_pedidos.html
 Página que exibe a lista de pedidos feitos.
 
-html
-Copiar
-Editar
+```html
 <h2>Lista de Pedidos</h2>
 <ul>
     {% for pedido in pedidos %}
         <li>{{ pedido.cliente.nome }} pediu {{ pedido.produto.nome }} em {{ pedido.data_hora }}</li>
     {% endfor %}
 </ul>
-Explicação
-<h2>Lista de Pedidos</h2>: Exibe o título da página.
+```
 
-<ul>: Cria uma lista não ordenada.
+#### Explicação
 
-{% for pedido in pedidos %}: Loop do Django que percorre a lista de pedidos e gera um item de lista para cada pedido.
+- **`<h2>Lista de Pedidos</h2>`**: Exibe o título da página.
+- **`<ul>`**: Cria uma lista não ordenada.
+- **`{% for pedido in pedidos %}`**: Loop do Django que percorre a lista de pedidos e gera um item de lista para cada pedido.
+- **`<li>{{ pedido.cliente.nome }} pediu {{ pedido.produto.nome }} em {{ pedido.data_hora }}</li>`**: Para cada pedido, exibe o nome do cliente, o produto pedido e a data/hora.
 
-<li>{{ pedido.cliente.nome }} pediu {{ pedido.produto.nome }} em {{ pedido.data_hora }}</li>: Para cada pedido, exibe o nome do cliente, o produto pedido e a data/hora.
+---
 
-3. listar_comandas.html
+### **3. `listar_comandas.html`**
+
 Página que exibe a lista de comandas da cozinha.
 
-html
-Copiar
-Editar
+```html
 <h2>Comandas da Cozinha</h2>
 <ul>
     {% for comanda in comandas %}
         <li>{{ comanda.produto }} - {{ comanda.data_hora }}</li>
     {% endfor %}
 </ul>
-Explicação
-<h2>Comandas da Cozinha</h2>: Exibe o título da página.
+```
 
-<ul>: Cria uma lista não ordenada.
+#### Explicação
 
-{% for comanda in comandas %}: Loop do Django que percorre todas as comandas.
+- **`<h2>Comandas da Cozinha</h2>`**: Exibe o título da página.
+- **`<ul>`**: Cria uma lista não ordenada.
+- **`{% for comanda in comandas %}`**: Loop do Django que percorre todas as comandas.
+- **`<li>{{ comanda.produto }} - {{ comanda.data_hora }}</li>`**: Para cada comanda, exibe o produto e a data/hora.
 
-<li>{{ comanda.produto }} - {{ comanda.data_hora }}</li>: Para cada comanda, exibe o produto e a data/hora.
-
-Conclusão
-
-Este README oferece uma explicação detalhada de cada parte do sistema de delivery. Ao seguir este guia, você deve ser capaz de entender como o Django gerencia os pedidos, a criação das comandas e a comunicação entre o cliente e o servidor utilizando os métodos HTTP GET, POST e PUT.
-
-Se você tiver dúvidas ou sugestões, me avise!
-
+---
 ## Conclusão
 
 Este README oferece uma explicação detalhada de cada parte do sistema de delivery. Ao seguir este guia, você deve ser capaz de entender como o Django gerencia os pedidos, a criação das comandas e a comunicação entre o cliente e o servidor utilizando os métodos HTTP **GET** e **POST**.
