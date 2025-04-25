@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fazer Pedido</title>
+</head>
+<body>
+    <h1>Fazer um Pedido</h1>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label>Nome:</label>
+        <input type="text" name="nome" placeholder="Seu nome">
+        <br><br>
+
+        <label>Endereço:</label>
+        <input type="text" name="endereco" placeholder="Seu endereço">
+        <br><br>
+
+        <label>Produto:</label>
+        <select name="produto">
+            {% for produto in produtos %}
+                <option value="{{ produto.id }}">{{ produto.nome }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <button type="submit">Fazer Pedido</button>
+    </form>
+</body>
+</html>

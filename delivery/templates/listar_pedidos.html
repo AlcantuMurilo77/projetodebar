@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pedidos Feitos</title>
+</head>
+<body>
+    <h1>Lista de Pedidos</h1>
+    <ul>
+        {% for pedido in pedidos %}
+            <li>{{ pedido.cliente.nome }} pediu {{ pedido.produto.nome }} em {{ pedido.data }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

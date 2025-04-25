@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comandas na Cozinha</title>
+</head>
+<body>
+    <h1>Comandas Atuais</h1>
+
+    {% if comandas %}
+        <ul>
+            {% for comanda in comandas %}
+                <li>
+                    {{ comanda.produto }} - {{ comanda.data_hora|date:"d/m H:i" }}
+                    <form method="post" action="{% url 'marcar_comanda_feita' comanda.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Feito</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhuma comanda no momento.</p>
+    {% endif %}
+</body>
+</html>
